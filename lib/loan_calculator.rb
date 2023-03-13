@@ -4,7 +4,7 @@ class LoanCalculator
 
   def initialize(principle:, loan_term_in_months:, interest_rate_per_year:, repayment_frequency:)
     @principle = principle.to_f
-    @loan_term_in_months = loan_term_in_months
+    @loan_term_in_months = loan_term_in_months.to_i
     @interest_rate_per_year = interest_rate_per_year.to_f
     @repayment_frequency = repayment_frequency
     @repayments = []
