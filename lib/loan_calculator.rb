@@ -42,8 +42,8 @@ class LoanCalculator
 
   def print_output
     print_table(@repayments)
-    puts "Total payments: #{@total_payments}"
-    puts "Total interest amount: #{@total_interest_amount}"
+    puts "Total payments: #{@total_payments.round(2)}"
+    puts "Total interest amount: #{@total_interest_amount.round(2)}"
   end
 
   private
