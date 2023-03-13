@@ -12,36 +12,23 @@ class LoanCalculator
     validate_inputs
 
     periodic_interest, repayment_amount = calc_repayment_amount
-
     repayments = []
-    total_payments = 0
-    total_interest_amount = 0
+    total_payments = total_interest_amount = 0
     balance = Float::INFINITY
+
     while balance > 0
-      installments = []
-
-      installments << @principle
-
+      installments = [@principle]
       interest_amount = (@principle * periodic_interest) / 100
-
       total_interest_amount += interest_amount
-
       installments << interest_amount
 
-      amount_paid = if repayment_amount > (interest_amount + balance)
-                      interest_amount + balance
-                    else
-                      repayment_amount - interest_amount
-                    end
+      amount_paid = repayment_amount > (interest_amount + balance) ? (interest_amount + balance) : (repayment_amount - interest_amount)
 
       installments << amount_paid
 
       @principle -= amount_paid
-
       total_payments += amount_paid
-
       balance = @principle <= 0 ? 0 : @principle
-
       installments << balance
 
       repayments << installments
