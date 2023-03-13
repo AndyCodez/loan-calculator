@@ -87,12 +87,6 @@ class LoanCalculator
   end
 
   def print_table(repayments)
-    repayments.each do |repayment|
-      puts "#{repayment[0]} | #{repayment[1]} | #{repayment[2]} | #{repayment[3]}"
-    end
-  end
-
-  def print_table(repayments)
     header = %w[Principle Interest Payment Balance]
     printf("%-15s%-15s%-15s%-15s\n", *header)
     repayments.each do |repayment|
