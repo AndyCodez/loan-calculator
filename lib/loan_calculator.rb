@@ -16,7 +16,7 @@ class LoanCalculator
     total_payments = total_interest_amount = 0
     balance = Float::INFINITY
 
-    while balance > 0
+    while balance.positive?
       installments = [@principle]
       interest_amount = (@principle * periodic_interest) / 100
       total_interest_amount += interest_amount
