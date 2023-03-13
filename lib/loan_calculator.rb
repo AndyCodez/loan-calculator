@@ -10,6 +10,8 @@ class LoanCalculator
 
     def calculate_repayments
 
+        validate_inputs
+
         case repayment_frequency
             when "bi-monthly"
                 num_of_payments = @loan_term_in_months / 2
@@ -67,6 +69,13 @@ class LoanCalculator
 
     private
     
+    def validate_inputs
+        raise ArgumentError, "Loan amount should be a positive number" unless principle.positive?
+        raise ArgumentError, "Loan term in months should be a positive integer" unless loan_term_in_months.positive? && loan_term_in_months.is_a?(Integer)
+        raise ArgumentError, "Interest rate per year should be a positive number" unless interest_rate_per_year.positive?
+        raise ArgumentError, "Repayment frequency should be one of 'monthly', 'bi-monthly', or 'weekly'" unless ["monthly", "bi-monthly", "weekly"].include?(repayment_frequency)
+    end
+
     def print_table(repayments)
         repayments.each do |repayment|
             puts "#{repayment[0]} | #{repayment[1]} | #{repayment[2]} | #{repayment[3]}"
@@ -74,4 +83,5 @@ class LoanCalculator
     end
     
 end
+
 
