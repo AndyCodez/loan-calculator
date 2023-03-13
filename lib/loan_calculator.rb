@@ -33,7 +33,14 @@ class LoanCalculator
 
       repayments << installments
     end
-    print_table(repayments)
+
+    {
+      total_payments: total_payments,
+      repayments: repayments,
+      total_interest_amount: total_interest_amount
+    }
+    # print_table(repayments)
+    # puts "Total payments: #{total_payments.round(2)}"
   end
 
   private
