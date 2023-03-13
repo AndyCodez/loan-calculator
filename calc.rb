@@ -1,4 +1,4 @@
-require_relative './loan_calculator'
+require_relative './lib/loan_calculator'
 
 puts "Welcome to the Loan Calculator!"
 
