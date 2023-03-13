@@ -72,6 +72,14 @@ RSpec.describe LoanCalculator do
         balance = repayments.last[3]
         expect(balance).to be_within(0.01).of(0.0)
       end
+
+      it 'total amount paid should include principle + total interest charged' do
+        calculator = LoanCalculator.new(principle: 1000, loan_term_in_months: 14, interest_rate_per_year: 13,
+                                        repayment_frequency: 'bi-monthly')
+        calculator.calculate_repayments
+
+        expect(1000 + calculator.total_interest_amount).to be_within(0.01).of(calculator.total_payments)
+      end
     end
   end
 end

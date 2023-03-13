@@ -1,25 +1,27 @@
 class LoanCalculator
-  attr_accessor :principle, :loan_term_in_months, :interest_rate_per_year, :repayment_frequency
+  attr_accessor :principle, :loan_term_in_months, :interest_rate_per_year, :repayment_frequency,
+                :total_payments, :repayments, :total_interest_amount
 
   def initialize(principle:, loan_term_in_months:, interest_rate_per_year:, repayment_frequency:)
     @principle = principle.to_f
     @loan_term_in_months = loan_term_in_months
     @interest_rate_per_year = interest_rate_per_year.to_f
     @repayment_frequency = repayment_frequency
+    @repayments = []
+    @total_payments = 0
+    @total_interest_amount = 0
   end
 
   def calculate_repayments
     validate_inputs
 
     periodic_interest, repayment_amount = calc_payment_info
-    repayments = []
-    total_payments = total_interest_amount = 0
     balance = Float::INFINITY
 
     while balance.positive?
       installments = [@principle]
       interest_amount = (@principle * periodic_interest) / 100
-      total_interest_amount += interest_amount
+      @total_interest_amount += interest_amount
       installments << interest_amount
 
       amount_paid = repayment_amount > (interest_amount + balance) ? (interest_amount + balance) : (repayment_amount - interest_amount)
@@ -27,20 +29,21 @@ class LoanCalculator
       installments << amount_paid
 
       @principle -= amount_paid
-      total_payments += amount_paid
+      @total_payments += amount_paid + interest_amount
       balance = @principle <= 0 ? 0 : @principle
       installments << balance
 
-      repayments << installments
+      @repayments << installments
     end
 
-    {
-      total_payments: total_payments,
-      repayments: repayments,
-      total_interest_amount: total_interest_amount
-    }
-    # print_table(repayments)
-    # puts "Total payments: #{total_payments.round(2)}"
+    print_output
+    @repayments
+  end
+
+  def print_output
+    print_table(@repayments)
+    puts "Total payments: #{@total_payments}"
+    puts "Total interest amount: #{@total_interest_amount}"
   end
 
   private
