@@ -61,14 +61,15 @@ RSpec.describe LoanCalculator do
     it 'returns an array of repayments' do
       calculator = LoanCalculator.new(principle: 1000, loan_term_in_months: 240, interest_rate_per_year: 6.5,
                                       repayment_frequency: 'monthly')
-      expect(calculator.calculate_repayments).to be_an_instance_of(Hash)
+      expect(calculator.calculate_repayments).to be_an_instance_of(Array)
     end
 
     context 'with valid inputs' do
       it 'calculates repayments correctly even for large principle' do
         calculator = LoanCalculator.new(principle: 10_000_000_000, loan_term_in_months: 24, interest_rate_per_year: 12.67,
                                         repayment_frequency: 'weekly')
-        balance = calculator.calculate_repayments[:repayments].last[3]
+        repayments = calculator.calculate_repayments
+        balance = repayments.last[3]
         expect(balance).to be_within(0.01).of(0.0)
       end
     end
