@@ -11,7 +11,7 @@ class LoanCalculator
   def calculate_repayments
     validate_inputs
 
-    periodic_interest, repayment_amount = calc_repayment_amount
+    periodic_interest, repayment_amount = calc_payment_info
     repayments = []
     total_payments = total_interest_amount = 0
     balance = Float::INFINITY
@@ -32,15 +32,13 @@ class LoanCalculator
       installments << balance
 
       repayments << installments
-
     end
-
     print_table(repayments)
   end
 
   private
 
-  def calc_repayment_amount
+  def calc_payment_info
     case repayment_frequency
     when 'bi-monthly'
       num_of_payments = @loan_term_in_months / 2
