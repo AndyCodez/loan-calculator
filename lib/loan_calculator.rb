@@ -13,7 +13,7 @@ class LoanCalculator
 
     periodic_interest, repayment_amount = calc_repayment_amount
 
-    repayments = [%w[principle interest_amount amount_paid balance]]
+    repayments = []
     total_payments = 0
     total_interest_amount = 0
     balance = Float::INFINITY
@@ -89,6 +89,14 @@ class LoanCalculator
   def print_table(repayments)
     repayments.each do |repayment|
       puts "#{repayment[0]} | #{repayment[1]} | #{repayment[2]} | #{repayment[3]}"
+    end
+  end
+
+  def print_table(repayments)
+    header = %w[Principle Interest Payment Balance]
+    printf("%-15s%-15s%-15s%-15s\n", *header)
+    repayments.each do |repayment|
+      printf("%-14.2f%-14.2f%-14.2f%-14.2f\n", repayment[0], repayment[1], repayment[2], repayment[3])
     end
   end
 end
