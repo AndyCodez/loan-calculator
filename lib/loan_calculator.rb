@@ -67,7 +67,7 @@ class LoanCalculator
     end
 
     repayment_amount = @principle / num_of_payments
-    return periodic_interest, repayment_amount
+    [periodic_interest, repayment_amount]
   end
 
   def validate_inputs
@@ -92,4 +92,3 @@ class LoanCalculator
     end
   end
 end
-
