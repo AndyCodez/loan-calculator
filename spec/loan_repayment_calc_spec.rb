@@ -64,13 +64,13 @@ RSpec.describe LoanCalculator do
       expect(calculator.calculate_repayments).to be_an_instance_of(Hash)
     end
 
-    # context 'with valid inputs' do
-    #   it 'calculates repayments correctly even for large principle' do
-    #     calculator = LoanCalculator.new(principle: 10_000_000_000, loan_term_in_months: 24, interest_rate_per_year: 12.67,
-    #                                     repayment_frequency: 'weekly')
-    #     repayments = calculator.calculate_repayments
-    #     expect(repayments.last[3]).to be_within(0.01).of(0.0)
-    #   end
-    # end
+    context 'with valid inputs' do
+      it 'calculates repayments correctly even for large principle' do
+        calculator = LoanCalculator.new(principle: 10_000_000_000, loan_term_in_months: 24, interest_rate_per_year: 12.67,
+                                        repayment_frequency: 'weekly')
+        balance = calculator.calculate_repayments[:repayments].last[3]
+        expect(balance).to be_within(0.01).of(0.0)
+      end
+    end
   end
 end
