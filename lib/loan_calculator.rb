@@ -30,7 +30,7 @@ class LoanCalculator
             total_payments = 0
             total_interest_amount = 0
             balance = Float::INFINITY
-            while num_of_payments >= 0 && balance > 0
+            while balance >= 0
                 installments = []
                 
                 installments << @principle
@@ -61,7 +61,6 @@ class LoanCalculator
                 
                 repayments << installments
         
-                num_of_payments-1
             end
         
             print_table(repayments)
