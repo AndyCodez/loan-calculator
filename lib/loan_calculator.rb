@@ -11,19 +11,7 @@ class LoanCalculator
   def calculate_repayments
     validate_inputs
 
-    case repayment_frequency
-    when 'bi-monthly'
-      num_of_payments = @loan_term_in_months / 2
-      periodic_interest = ((interest_rate_per_year / 100.0) / 12.0) * 2.0
-    when 'monthly'
-      num_of_payments = @loan_term_in_months
-      periodic_interest = (interest_rate_per_year / 100.0) / 12.0
-    when 'weekly'
-      num_of_payments = @loan_term_in_months * 4
-      periodic_interest = ((interest_rate_per_year / 100.0) / 12.0) / 4
-    end
-
-    repayment_amount = @principle / num_of_payments
+    periodic_interest, repayment_amount = calc_repayment_amount
 
     repayments = [%w[principle interest_amount amount_paid balance]]
     total_payments = 0
@@ -65,6 +53,23 @@ class LoanCalculator
 
   private
 
+  def calc_repayment_amount
+    case repayment_frequency
+    when 'bi-monthly'
+      num_of_payments = @loan_term_in_months / 2
+      periodic_interest = ((interest_rate_per_year / 100.0) / 12.0) * 2.0
+    when 'monthly'
+      num_of_payments = @loan_term_in_months
+      periodic_interest = (interest_rate_per_year / 100.0) / 12.0
+    when 'weekly'
+      num_of_payments = @loan_term_in_months * 4
+      periodic_interest = ((interest_rate_per_year / 100.0) / 12.0) / 4
+    end
+
+    repayment_amount = @principle / num_of_payments
+    return periodic_interest, repayment_amount
+  end
+
   def validate_inputs
     raise ArgumentError, 'Loan amount should be a positive number' unless principle.positive?
 
@@ -87,3 +92,4 @@ class LoanCalculator
     end
   end
 end
+
